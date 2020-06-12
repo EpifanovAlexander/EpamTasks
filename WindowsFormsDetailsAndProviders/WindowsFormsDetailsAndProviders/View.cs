@@ -8,16 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsDetailsAndProviders.Classes;
 
 namespace WindowsFormsDetailsAndProviders
 {
     public partial class View : Form
     {
+        TableService tableService = new TableService();
+
         public View()
         {
             InitializeComponent();
             dataGridViewAll.AutoGenerateColumns = true;
-            dataGridViewAll.DataSource = GetTable("Select Dname AS Деталь,Dprice AS Цена From Details");
+            dataGridViewAll.DataSource = tableService.GetTable("Select Dname AS Деталь,Dprice AS Цена From Details");
         }
 
         private void View_FormClosed(object sender, FormClosedEventArgs e)
@@ -49,21 +52,7 @@ namespace WindowsFormsDetailsAndProviders
                         break;
                     }
             }
-            dataGridViewAll.DataSource = GetTable(command);
-        }
-
-        private static DataTable GetTable(string sqlCommand)
-        {
-            string connectionString = "Integrated Security=SSPI;Persist Security Info=False;" +
-                "Initial Catalog=ProvidersAndDetails;Data Source=localhost";
-
-            SqlCommand command = new SqlCommand(sqlCommand, new SqlConnection(connectionString));
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-
-            DataTable table = new DataTable();
-            adapter.Fill(table);
-
-            return table;
-        }        
+            dataGridViewAll.DataSource = tableService.GetTable(command);
+        }      
     }
 }

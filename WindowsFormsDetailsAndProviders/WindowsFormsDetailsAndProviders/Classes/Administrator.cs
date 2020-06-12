@@ -16,7 +16,7 @@ namespace WindowsFormsDetailsAndProviders.Classes
             get => name;
             set
             {
-                if (value != null) name = value;
+                name = value ?? throw new ArgumentNullException(nameof(value));
             }
         }
 
@@ -25,7 +25,7 @@ namespace WindowsFormsDetailsAndProviders.Classes
             get => pass;
             set
             {
-                if (value != null) pass = value;
+               pass = value ?? throw new ArgumentNullException(nameof(value));
             }
         }
 

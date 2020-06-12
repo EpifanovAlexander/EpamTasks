@@ -49,6 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -68,8 +69,8 @@
       <DependentUpon>Admin.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Administrator.cs" />
-    <Compile Include="Classes\Details.cs" />
-    <Compile Include="Classes\DetailsService.cs" />
+    <Compile Include="Classes\AdminService.cs" />
+    <Compile Include="Classes\TableService.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -15,13 +15,9 @@ namespace WindowsFormsDetailsAndProviders
         [STAThread]
         static void Main()
         {
-            List<Administrator> Admins = new List<Administrator>();
-            Admins.Add(new Administrator("Dmitriy", "Dima"));
-            Admins.Add(new Administrator("Silvia", "123456"));
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main(Admins));
+            Application.Run(new Main());
         }
     }
 }

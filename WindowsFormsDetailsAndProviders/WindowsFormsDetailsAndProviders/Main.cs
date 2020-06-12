@@ -13,13 +13,66 @@ namespace WindowsFormsDetailsAndProviders
 {
     public partial class Main : Form
     {
-        private List<Administrator> Admins;
-
-        public Main(List<Administrator> Admins)
+        public Main()
         {
             InitializeComponent();
             ViewTransparent();
-            this.Admins = Admins;
+        }
+
+        private void picBoxEnter_Click(object sender, EventArgs e)
+        {
+            AdminService adminService = new AdminService();
+            Administrator admin = new Administrator(txtBLogin.Text, masktxtBPass.Text);
+            if (adminService.IsCorrect(admin))
+            {
+                Admin adminForm = new Admin(admin);
+                adminForm.Show();
+                Hide();
+            }
+            else
+            {
+                MessageBox.Show("Администраторов с таким логином и паролем нет в системе!" +
+                                  Environment.NewLine + "Проверьте правильность введённых значений!", "Ошибка!",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void picBoxView_Click(object sender, EventArgs e)
+        {
+            View view = new View();
+            view.Show();
+            Hide();
+        }
+
+        private void picBoxExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void linkLblForget_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show("Память у вас, как у рыбоньки!", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void Main_Activated(object sender, EventArgs e)
+        {
+            masktxtBPass.Text = "";
+            txtBLogin.Text = "";
+        }
+
+        private void chBView_CheckedChanged(object sender, EventArgs e)
+        {
+            masktxtBPass.UseSystemPasswordChar = (chBView.Checked) ? false : true;
+        }
+
+        private void ViewTransparent()
+        {
+            picBoxEnter.Parent = picBoxBackground;
+            picBoxView.Parent = picBoxBackground;
+            picBoxExit.Parent = picBoxBackground;
+            picBoxEnter.BackColor = Color.Transparent;
+            picBoxView.BackColor = Color.Transparent;
+            picBoxExit.BackColor = Color.Transparent;
         }
 
         private void picBoxEnter_MouseMove(object sender, MouseEventArgs e)
@@ -54,78 +107,5 @@ namespace WindowsFormsDetailsAndProviders
             picBoxExit.Image = System.Drawing.Image.FromFile(@"..\..\images\ExitMouseMove.png");
             grBAutorization.Visible = false;
         }
-
-        private void ViewTransparent()
-        {
-            picBoxEnter.Parent = picBoxBackground;
-            picBoxView.Parent = picBoxBackground;
-            picBoxExit.Parent = picBoxBackground;
-            picBoxEnter.BackColor = Color.Transparent;
-            picBoxView.BackColor = Color.Transparent;
-            picBoxExit.BackColor = Color.Transparent;
-        }
-
-
-
-        private void Main_Activated(object sender, EventArgs e)
-        {
-            masktxtBPass.Text = "";
-            txtBLogin.Text = "";
-        }
-
-        private void linkLblForget_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            MessageBox.Show("Память у вас, как у рыбоньки!","Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void chBView_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chBView.Checked)
-            {
-                masktxtBPass.UseSystemPasswordChar = false;
-            }
-            else
-            {
-                masktxtBPass.UseSystemPasswordChar = true;
-            }
-        }
-
-        private void picBoxEnter_Click(object sender, EventArgs e)
-        {
-            int CurrentAdmin = 0;
-            foreach (Administrator admin in Admins)
-            {
-                if (admin.Name.Equals(txtBLogin.Text) && admin.Pass.Equals(masktxtBPass.Text))
-                {
-                    Admin adminForm = new Admin(admin);
-                    adminForm.Show();
-                    Hide();
-                }
-                else
-                {
-                    CurrentAdmin++;
-                }
-            }
-
-            if (CurrentAdmin == Admins.Count)
-            {
-                MessageBox.Show("Администраторов с таким логином и паролем нет в системе!" +
-                    Environment.NewLine + "Проверьте правильность введённых значений!", "Ошибка!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void picBoxView_Click(object sender, EventArgs e)
-        {
-            View view = new View();
-            view.Show();
-            Hide();
-        }
-
-        private void picBoxExit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
     }
 }
