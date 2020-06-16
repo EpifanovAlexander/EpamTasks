@@ -70,7 +70,11 @@
     </Compile>
     <Compile Include="Classes\Administrator.cs" />
     <Compile Include="Classes\AdminService.cs" />
-    <Compile Include="Classes\TableService.cs" />
+    <Compile Include="Classes\DeliveryTableService.cs" />
+    <Compile Include="Classes\DetailsTableService.cs" />
+    <Compile Include="Classes\MyTableSqlCommands.cs" />
+    <Compile Include="Classes\ProvidersTableService.cs" />
+    <Compile Include="Classes\TableServiceBase.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

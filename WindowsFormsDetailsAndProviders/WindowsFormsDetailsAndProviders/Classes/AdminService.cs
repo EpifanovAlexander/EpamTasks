@@ -11,7 +11,7 @@ namespace WindowsFormsDetailsAndProviders.Classes
 {
     class AdminService
     {
-        private string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+        private string connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
         public bool IsCorrect(Administrator admin)
         {

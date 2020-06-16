@@ -14,13 +14,15 @@ namespace WindowsFormsDetailsAndProviders
 {
     public partial class View : Form
     {
-        TableService tableService = new TableService();
+        DetailsTableService DetailsTS = new DetailsTableService();
+        ProvidersTableService ProvidersTS = new ProvidersTableService();
+        DeliveryTableService DeliveryTS = new DeliveryTableService();
 
         public View()
         {
             InitializeComponent();
             dataGridViewAll.AutoGenerateColumns = true;
-            dataGridViewAll.DataSource = tableService.GetTable("Select Dname AS Деталь,Dprice AS Цена From Details");
+            dataGridViewAll.DataSource = DetailsTS.EasyTable();
         }
 
         private void View_FormClosed(object sender, FormClosedEventArgs e)
@@ -31,28 +33,15 @@ namespace WindowsFormsDetailsAndProviders
 
         private void tabControlAll_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string command = "";
             switch (tabControlAll.SelectedIndex)
             {
-                case 0:
-                    {
-                        command = "Select Dname AS Деталь,Dprice AS Цена From Details";
+                case 0: dataGridViewAll.DataSource = DetailsTS.EasyTable();
                         break;
-                    }
-                case 1:
-                    {
-                        command = "Select pname AS Фамилия From Providers";
+                case 1: dataGridViewAll.DataSource = ProvidersTS.EasyTable();
                         break;
-                    }
-                case 2:
-                    {
-                        command = "Select pname AS Фамилия,Dname AS Деталь,volume AS Объём,date AS [Время сдачи]" +
-                                  " FROM Delivery Join Providers ON Delivery.pnum = Providers.pnum" +
-                                  " Join Details ON Delivery.dnum = Details.Dnum";
+                case 2: dataGridViewAll.DataSource = DeliveryTS.EasyTable();
                         break;
-                    }
             }
-            dataGridViewAll.DataSource = tableService.GetTable(command);
         }      
     }
 }

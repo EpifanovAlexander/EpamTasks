@@ -17,7 +17,10 @@ namespace WindowsFormsDetailsAndProviders
     {
         private Administrator CurrentAdmin;
         private DataTable dataTable;
-        TableService tableService = new TableService();
+
+        DetailsTableService DetailsTS = new DetailsTableService();
+        ProvidersTableService ProvidersTS = new ProvidersTableService();
+        DeliveryTableService DeliveryTS = new DeliveryTableService();
 
 
         public Admin(Administrator admin)
@@ -50,7 +53,30 @@ namespace WindowsFormsDetailsAndProviders
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (tableService.UpdateTable(tabControlAll.SelectedIndex, dataTable))
+            switch (tabControlAll.SelectedIndex)
+            {
+                case 0:
+                    {
+                        Check(DetailsTS.Update(dataTable));
+                        break;
+                    }
+                case 1:
+                    {
+                        Check(ProvidersTS.Update(dataTable));
+                        break;
+                    }
+                case 2:
+                    {
+                        Check(DeliveryTS.Update(dataTable));
+                        break;
+                    }
+            }
+        }
+
+
+        public void Check(bool condition)
+        {
+            if (condition)
             {
                 MessageBox.Show("База данных обновлена!", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -59,8 +85,8 @@ namespace WindowsFormsDetailsAndProviders
                 MessageBox.Show("База данных не была обновлена!" + Environment.NewLine + "Проверьте правильность введённых значений",
                                 "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
+
 
         // Общее
         private void Admin_FormClosed(object sender, FormClosedEventArgs e)
@@ -80,19 +106,19 @@ namespace WindowsFormsDetailsAndProviders
             {
                 case 0:
                     {
-                        dataTable = tableService.GetTable("Select * From Details");
+                        dataTable = DetailsTS.GetTable();
                         dataTable.Columns["Dnum"].ReadOnly = true;
                         break;
                     }
                 case 1:
                     {
-                        dataTable = tableService.GetTable("Select * From Providers");
+                        dataTable = ProvidersTS.GetTable();
                         dataTable.Columns["pnum"].ReadOnly = true;
                         break;
                     }
                 case 2:
                     {
-                        dataTable = tableService.GetTable("Select * FROM Delivery");
+                        dataTable = DeliveryTS.GetTable();
                         dataTable.Columns["Dnum"].ReadOnly = false;
                         dataTable.Columns["pnum"].ReadOnly = false;
                         break;
